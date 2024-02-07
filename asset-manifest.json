@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/poornima005/InterviewBook-frontend/static/css/main.44da5d83.css",
+    "main.js": "/poornima005/InterviewBook-frontend/static/js/main.9564c132.js",
+    "static/js/300.2ef464fc.chunk.js": "/poornima005/InterviewBook-frontend/static/js/300.2ef464fc.chunk.js",
+    "static/js/952.cbea471f.chunk.js": "/poornima005/InterviewBook-frontend/static/js/952.cbea471f.chunk.js",
+    "static/js/64.047ea5e7.chunk.js": "/poornima005/InterviewBook-frontend/static/js/64.047ea5e7.chunk.js",
+    "static/js/592.ef0a8427.chunk.js": "/poornima005/InterviewBook-frontend/static/js/592.ef0a8427.chunk.js",
+    "static/media/1699866282601poornima.jpg": "/poornima005/InterviewBook-frontend/static/media/1699866282601poornima.31f15d04670284a9e99b.jpg",
+    "static/media/1653474765011IMG_20200113_151518_101.jpg": "/poornima005/InterviewBook-frontend/static/media/1653474765011IMG_20200113_151518_101.99d34e1666bfd0e0da6c.jpg",
+    "static/media/1653546797551dr-dipankar.png": "/poornima005/InterviewBook-frontend/static/media/1653546797551dr-dipankar.c84ac563b0ff2232a519.png",
+    "static/media/1653475236506WhatsApp Image 2022-05-22 at 4.30.43 PM (1).jpeg": "/poornima005/InterviewBook-frontend/static/media/1653475236506WhatsApp Image 2022-05-22 at 4.30.43 PM (1).224324d6e0192e4cbd36.jpeg",
+    "static/media/WhatsApp Image 2022-05-22 at 4.30.43 PM (1).jpeg": "/poornima005/InterviewBook-frontend/static/media/17013265467281653475236506WhatsApp Image 2022-05-22 at 4.30.43 PM (1).224324d6e0192e4cbd36.jpeg",
+    "static/media/DAVV_logo.png": "/poornima005/InterviewBook-frontend/static/media/DAVV_logo.b5215889704a3ac1f8a2.png",
+    "static/media/defaultuser.jpg": "/poornima005/InterviewBook-frontend/static/media/defaultuser.4aa827c3440249505e81.jpg",
+    "static/media/undefined.jpg": "/poornima005/InterviewBook-frontend/static/media/undefined.4aa827c3440249505e81.jpg",
+    "index.html": "/poornima005/InterviewBook-frontend/index.html",
+    "main.44da5d83.css.map": "/poornima005/InterviewBook-frontend/static/css/main.44da5d83.css.map",
+    "main.9564c132.js.map": "/poornima005/InterviewBook-frontend/static/js/main.9564c132.js.map",
+    "300.2ef464fc.chunk.js.map": "/poornima005/InterviewBook-frontend/static/js/300.2ef464fc.chunk.js.map",
+    "952.cbea471f.chunk.js.map": "/poornima005/InterviewBook-frontend/static/js/952.cbea471f.chunk.js.map",
+    "64.047ea5e7.chunk.js.map": "/poornima005/InterviewBook-frontend/static/js/64.047ea5e7.chunk.js.map",
+    "592.ef0a8427.chunk.js.map": "/poornima005/InterviewBook-frontend/static/js/592.ef0a8427.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.44da5d83.css",
+    "static/js/main.9564c132.js"
+  ]
+}
