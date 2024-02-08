@@ -30,6 +30,7 @@ function LikesDislikes({props}) {
           if(res.status === 200){
             //console.log(res.data);
             setLikes(res.data.length);
+            //if user has also like
             res.data.map((like)=>(
                 like.userID === props.userID && setLikeAction('liked')
             ))
@@ -46,6 +47,7 @@ function LikesDislikes({props}) {
           if(res.status === 200){
             //console.log(res.data.length);
             setDisLikes(res.data.length);
+            //if user have also dislike
             res.data.map((like)=>(
                 like.userID === props.userID && setDisLikeAction('disliked')
             ))
@@ -62,6 +64,7 @@ function LikesDislikes({props}) {
   },[])
 
   const onLike = () => {
+    //not liked already
     if(likeAction === null){
         axios.post(`/uplike`,{variable})
         .then(res => {
@@ -96,6 +99,7 @@ function LikesDislikes({props}) {
   }
 
 const onDislike = () => {
+    //if user not have already dislike
     if(disLikeAction === null){
         axios.post(`/updislike`,{variable})
         .then(res => {

@@ -1,3 +1,4 @@
+/*DashBoard Profile */
 import React, { useState, useEffect } from "react";
 import "./addquestion.css";
 import axios from "axios";
@@ -89,7 +90,7 @@ function Profile() {
                   <img
                     className="profilePhoto"
                     src={
-                      photo ? require("../../../uploads/" + photo) : Defaultuser
+                      photo ? require("../uploads/" + photo) : Defaultuser
                     }
                     alt={name}
                     width={150}
@@ -101,10 +102,10 @@ function Profile() {
                 <h3>{name}</h3>
                 <h5>{ucategory}</h5>
                 <h5>{title}</h5>
-                <label>
+               {/* <label>
                   <MdCalendarViewMonth /> Member since{" "}
                   {moment(createdAt).fromNow()}
-                </label>
+                  </label>*/}
                 <label>
                   <MdLocationOn /> {location}
                 </label>

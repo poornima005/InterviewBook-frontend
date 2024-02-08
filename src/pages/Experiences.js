@@ -188,37 +188,23 @@ function Experience() {
                 />{" "}
                 <br></br>
                 <div className="footer">
-                  Batch: {experience.year} <br></br>
-                  LinkedIn: {experience.authorlinkedin}
+                  <span className="highlight">Batch:</span> {experience.year} <br></br>
+                  <span className="highlight"> LinkedIn: </span>{experience.authorlinkedin}
                   <br></br>
-                  Email: {experience.authoremail}
+                  <span className="highlight">Email: </span>{experience.authoremail}
                   <br></br>
-                  Contact: {experience.authorcontact}
+                  <span className="highlight">Contact: </span>{experience.authorcontact}
                 </div>
                 <div className="footer">
                   Shared by{" "}
-                  <Link
-                    className="link"
-                    to={`/publicprofile/${experience.authorID}/${experience.author 
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                    state={{ authorID: experience.authorID }}
-                  >
-                    {experience.author}
-                  </Link>{" "}
+                  
+                  <span className="highlight">  {experience.author}</span>
+                  {" "}
                   {moment(experience.createdAt).fromNow()} works in{" "}
-                  <Link
-                    to={`/experience/${experience.company
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                    className="link"
-                    state={{ company: experience.company }}
-                  >
-                    {experience.company}
-                  </Link>{" "}
-                  <span className="views">
-                    Viewed: {experience.views ? experience.views : 0} times
-                  </span>
+                   
+                  <span className="highlight"> {experience.company}</span>
+                  {" "}
+                  
                 </div>
               </div>
             );

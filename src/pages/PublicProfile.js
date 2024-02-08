@@ -81,7 +81,7 @@ if (locationData.state && locationData.state.userID) {
                                 <h3>Profile</h3>
                             </div>
                             <div className="col-sm-2 mt-3">
-                                <img className="profilePhoto" src={photo ? require('../../../uploads/'+photo) : Defaultuser } alt={name} width={150}/>
+                                <img className="profilePhoto" src={photo ? require('../uploads/'+photo) : Defaultuser } alt={name} width={150}/>
                             </div>
                             <div className="col-sm-10 mt-3">
                                 <h3>{name}</h3>

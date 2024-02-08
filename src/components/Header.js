@@ -49,9 +49,9 @@ function Header() {
       <a href="#home"><img width="42px" height="42px" src={Logo}/></a>
     </div>
         <Link className='logo' to="/">DAVV InterviewBook</Link>
-        {/*provide a button that toggles the visibility of the Navbar's content on smaller screens */}
+        {/*toggle for the Navbar's content on small screen */}
         <Navbar.Toggle aria-controls="navbarScroll" />
-        {/*used to group and hide Navbar content on smaller screens */}
+        {/*grouping and hide Navbar content on small screen */}
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="ms-auto my-2 my-lg-0"

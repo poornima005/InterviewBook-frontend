@@ -1,3 +1,4 @@
+/*Showing all tagged questions */
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import axios from "axios";
@@ -6,7 +7,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import moment from "moment";
-import Close from "@material-ui/icons/Close";
+import Close from "@mui/icons-material/Close";
+
 import LikesDislikes from "../components/LikesDislikes";
 import jsPDF from 'jspdf';
 
@@ -22,6 +24,8 @@ function Tagged() {
   const [query, setQuery] = useState("");
   const userID = localStorage.getItem("_id");
   const [questions, setQuestions] = useState([]);
+  const ucategory = localStorage.getItem("ucategory");
+
   const [answers, setAnswers] = useState([]);
   const [questionID, setQuestionID] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -54,16 +58,16 @@ function Tagged() {
   //download pdf 
   const downloadPDF = () => {
     const pdf = new jsPDF();
-  
+
     questions.forEach((question, index) => {
       pdf.text(`Question ${index + 1}`, 10, index * 50 + 10);
       pdf.text(question.query, 10, index * 50 + 20);
       // Add more formatting as needed
     });
-  
+
     pdf.save('questions.pdf');
   };
-  
+
   function showAnswers(id, query, tags) {
     axios
       .get(`/getanswers?id=${id}`)
@@ -231,8 +235,8 @@ function Tagged() {
               Next Page{" "}
             </button>
             <button className="btn btn-primary btn-sm mt-2 ms-2" onClick={downloadPDF}>
-  Download PDF
-</button>
+              Download PDF
+            </button>
 
           </div>
           <input placeholder="Enter Question..." onChange={onTextChange} />
@@ -283,21 +287,23 @@ function Tagged() {
                     Viewed: {question.views ? question.views : 0} times
                   </span>
                 </div>
-                {loggedIn === "true" ? (
-                  <div
-                    className="btn btn-primary btn-sm mt-2 me-2"
-                    onClick={() => giveAnswer(question._id)}
-                  >
-                    Give Answer
-                  </div>
-                ) : (
-                  <div
-                    className="btn btn-primary btn-sm mt-2 me-2"
-                    onClick={() => navigate("/login")}
-                  >
-                    Give Answer
-                  </div>
-                )}
+                {ucategory !== 'junior' && (
+                  loggedIn === "true" ? (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => giveAnswer(question.query, question._id)}
+                    >
+                      Give Answer
+                    </div>
+                  ) : (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => navigate("/login")}
+                    >
+                      Give Answer
+                    </div>
+                  ))
+                }
                 <div
                   className="btn btn-primary btn-sm mt-2"
                   onClick={() =>

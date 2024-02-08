@@ -1,3 +1,4 @@
+/*For questions showing on questions tab */
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import axios from "axios";
@@ -5,9 +6,9 @@ import "./home.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import JoditEditor from "jodit-react";
-/*Moment :library for parsing, validating, manipulating, and formatting dates. */
 import moment from "moment";
-import Close from "@material-ui/icons/Close";
+import Close from "@mui/icons-material/Close";
+
 import LikesDislikes from "../components/LikesDislikes";
 import jsPDF from 'jspdf';
 
@@ -16,7 +17,7 @@ function Home() {
   const user = localStorage.getItem("name");
   const loggedIn = localStorage.getItem("loggedIn");
   const ucategory = localStorage.getItem("ucategory");
-  
+
   const userID = localStorage.getItem("_id");
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
@@ -40,18 +41,17 @@ function Home() {
   const nextPage = () => {
     setSkip(skip + limit);
   };
-//download pdf
-const downloadPDF = () => {
-  const pdf = new jsPDF();
+  //download pdf
+  const downloadPDF = () => {
+    const pdf = new jsPDF();
 
-  questions.forEach((question, index) => {
-    pdf.text(`Question ${index + 1}`, 10, index * 50 + 10);
-    pdf.text(question.query, 10, index * 50 + 20);
-    // Add more formatting as needed
-  });
+    questions.forEach((question, index) => {
+      pdf.text(`Question ${index + 1}`, 10, index * 50 + 10);
+      pdf.text(question.query, 10, index * 50 + 20);
+    });
 
-  pdf.save('questions.pdf');
-};
+    pdf.save('questions.pdf');
+  };
 
   useEffect(() => {
     getQuestions(limit, skip);
@@ -67,7 +67,6 @@ const downloadPDF = () => {
 
   function onTextChange(e) {
     let queryText = e.target.value.toLowerCase();
-    console.log(queryText.length);
     if (queryText.length === 0) {
       axios
         .get(`/getallquestions`)
@@ -119,11 +118,11 @@ const downloadPDF = () => {
     if (questionID) {
       axios
         .post(`/addview?id=${questionID}`, {
+          /*adding 1 more */
           view: 1,
         })
         .then((res) => {
           if (res) {
-            //toast("View Added Success!");
             getQuestions();
             window.location.reload();
           }
@@ -216,8 +215,8 @@ const downloadPDF = () => {
               Next Page{" "}
             </button>
             <button className="btn btn-primary btn-sm mt-2 ms-2" onClick={downloadPDF}>
-  Download PDF
-</button>
+              Download PDF
+            </button>
 
           </div>
           <input placeholder="Enter Question..." onChange={onTextChange} />
@@ -268,22 +267,22 @@ const downloadPDF = () => {
                   </span>
                 </div>
                 {ucategory !== 'junior' && (
-  loggedIn === "true" ? (
-    <div
-      className="btn btn-primary btn-sm mt-2 me-2"
-      onClick={() => giveAnswer(question.query, question._id)}
-    >
-      Give Answer
-    </div>
-  ) : (
-    <div
-      className="btn btn-primary btn-sm mt-2 me-2"
-      onClick={() => navigate("/login")}
-    >
-      Give Answer
-    </div>
-  )
-)}
+                  loggedIn === "true" ? (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => giveAnswer(question.query, question._id)}
+                    >
+                      Give Answer
+                    </div>
+                  ) : (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => navigate("/login")}
+                    >
+                      Give Answer
+                    </div>
+                  )
+                )}
 
                 <div
                   className="btn btn-primary btn-sm mt-2"

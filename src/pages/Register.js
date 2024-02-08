@@ -13,6 +13,8 @@ function Register() {
   const [ucategory, setUCategory] = useState("");
   const [password, setPassword] = useState("");
   const [darkMode, setDarkMode] = useState("light");
+  const [selectedCategory, setSelectedCategory] = useState("User Category"); // New state
+  
 
   const registerForm = () => {
     if (name === "" && email === "" && password === "" && ucategory === "") {
@@ -64,7 +66,7 @@ function Register() {
       />
       <div className="authForm px-5 shadow">
         <h2 className="mb-5">Register</h2>
-        <Form.Group className="mb-3" controlId="formBasicName">
+        <Form.Group className="mb-3" >
           <Form.Label>Full Name</Form.Label>
           <Form.Control
             type="text"
@@ -75,16 +77,19 @@ function Register() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCategory" >
-          <select name="ucategory" value={ucategory} onChange={inputsHandler}>
-            <option value={ucategory}>User Category</option>
-            <option value="senior">Senior</option>
-            <option value="junior">Junior</option>
-            <option value="faculty">Faculty</option>
-          </select>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+       < Form.Group className="mb-3" >
+        <div className="selected-category">{selectedCategory}</div>
+        <select name="ucategory" value={ucategory} onChange={inputsHandler}>
+          <option value="" disabled>
+            User Category
+          </option>
+          <option value="senior">Senior</option>
+          <option value="junior">Junior</option>
+          <option value="faculty">Faculty</option>
+        </select>
+      </Form.Group>
+      
+        <Form.Group className="mb-3" >
           <Form.Label>Email ID</Form.Label>
           <Form.Control
             type="email"
@@ -95,7 +100,7 @@ function Register() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"

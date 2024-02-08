@@ -6,7 +6,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import moment from "moment";
-import Close from "@material-ui/icons/Close";
+import Close from "@mui/icons-material/Close";
+
 import LikesDislikes from "../components/LikesDislikes";
 import jsPDF from 'jspdf';
 
@@ -24,6 +25,7 @@ function Category() {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [questionID, setQuestionID] = useState("");
+  const ucategory = localStorage.getItem("ucategory");
   const [showForm, setShowForm] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ function Category() {
   const [tags, setTags] = useState([]);
   const [limit] = useState(3);
   const [skip, setSkip] = useState(0);
+
   //console.log(answers);
 
   const editor = useRef(null);
@@ -40,18 +43,18 @@ function Category() {
     readonly: false,
     height: "60vh",
   };
-//download pdf 
-const downloadPDF = () => {
-  const pdf = new jsPDF();
+  //download pdf 
+  const downloadPDF = () => {
+    const pdf = new jsPDF();
 
-  questions.forEach((question, index) => {
-    pdf.text(`Question ${index + 1}`, 10, index * 50 + 10);
-    pdf.text(question.query, 10, index * 50 + 20);
-    // Add more formatting as needed
-  });
+    questions.forEach((question, index) => {
+      pdf.text(`Question ${index + 1}`, 10, index * 50 + 10);
+      pdf.text(question.query, 10, index * 50 + 20);
+      // Add more formatting as needed
+    });
 
-  pdf.save('questions.pdf');
-};
+    pdf.save('questions.pdf');
+  };
 
   function giveAnswer(id) {
     setShowForm(!showForm);
@@ -214,8 +217,8 @@ const downloadPDF = () => {
               Next Page{" "}
             </button>
             <button className="btn btn-primary btn-sm mt-2 ms-2" onClick={downloadPDF}>
-  Download PDF
-</button>
+              Download PDF
+            </button>
 
           </div>
           <input placeholder="Enter Question..." onChange={onTextChange} />
@@ -265,21 +268,23 @@ const downloadPDF = () => {
                     Viewed: {question.views ? question.views : 0} times
                   </span>
                 </div>
-                {loggedIn === "true" ? (
-                  <div
-                    className="btn btn-primary btn-sm mt-2 me-2"
-                    onClick={() => giveAnswer(question._id)}
-                  >
-                    Give Answer
-                  </div>
-                ) : (
-                  <div
-                    className="btn btn-primary btn-sm mt-2 me-2"
-                    onClick={() => navigate("/login")}
-                  >
-                    Give Answer
-                  </div>
-                )}
+                {ucategory !== 'junior' && (
+                  loggedIn === "true" ? (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => giveAnswer(question.query, question._id)}
+                    >
+                      Give Answer
+                    </div>
+                  ) : (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => navigate("/login")}
+                    >
+                      Give Answer
+                    </div>
+                  ))
+                }
                 <div
                   className="btn btn-primary btn-sm mt-2"
                   onClick={() =>

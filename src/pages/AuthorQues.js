@@ -7,11 +7,12 @@ import { ToastContainer, toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import moment from "moment";
 import LikesDislikes from "../components/LikesDislikes";
-import Close from "@material-ui/icons/Close";
+import Close from "@mui/icons-material/Close";
+
 import jsPDF from 'jspdf';
 
-
 function AuthorQues() {
+ 
   const location = useLocation();
   let authorID = "";
   if (location.state !== "") {
@@ -23,6 +24,8 @@ function AuthorQues() {
   const [query, setQuery] = useState("");
   const userID = localStorage.getItem("_id");
   const [questions, setQuestions] = useState([]);
+  const ucategory = localStorage.getItem("ucategory");
+
   const [answers, setAnswers] = useState([]);
   const [questionID, setQuestionID] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -34,7 +37,7 @@ function AuthorQues() {
   const [aanswers, setAAnswers] = useState([]);
   const [limit] = useState(3);
   const [skip, setSkip] = useState(0);
-
+ 
   console.log("Author question called");
 
   const editor = useRef(null);
@@ -47,16 +50,16 @@ function AuthorQues() {
   // download pdf function
   const downloadPDF = () => {
     const pdf = new jsPDF();
-  
+
     questions.forEach((question, index) => {
       pdf.text(`Question ${index + 1}`, 10, index * 50 + 10);
       pdf.text(question.query, 10, index * 50 + 20);
       // Add more formatting as needed
     });
-  
+
     pdf.save('questions.pdf');
   };
-  
+
   function giveAnswer(id) {
     setShowForm(!showForm);
     setQuestionID(id);
@@ -233,173 +236,178 @@ function AuthorQues() {
         pauseOnHover
       />
       <div className="container">
-        <div className="searchFilter">
-          <h4
-            className={`totalQues  ${darkMode === "light" ? "light" : "dark"}`}
-          >
-            Total Questions: {questions.length}
-          </h4>
-          <div className="d-flex justify-content-center">
-            <button
-              className="btn btn-primary btn-sm mt-2"
-              onClick={previousPage}
-            >
-              {" "}
-              Previous Page{" "}
-            </button>
-            <button
-              className="btn btn-primary btn-sm mt-2 ms-2"
-              onClick={nextPage}
-            >
-              {" "}
-              Next Page{" "}
-            </button>
-            <button className="btn btn-primary btn-sm mt-2 ms-2" onClick={downloadPDF}>
-  Download PDF
-</button>
-          </div>
-        
+      
+  <div className="searchFilter">
+    <h4
+      className={`totalQues  ${darkMode === "light" ? "light" : "dark"}`}
+    >
+      Total Questions: {questions.length}
+    </h4>
+    <div className="d-flex justify-content-center">
+      <button
+        className="btn btn-primary btn-sm mt-2"
+        onClick={previousPage}
+      >
+        {" "}
+        Previous Page{" "}
+      </button>
+      <button
+        className="btn btn-primary btn-sm mt-2 ms-2"
+        onClick={nextPage}
+      >
+        {" "}
+        Next Page{" "}
+      </button>
+      <button className="btn btn-primary btn-sm mt-2 ms-2" onClick={downloadPDF}>
+        Download PDF
+      </button>
+    </div>
 
-          <input placeholder="Enter Question..." onChange={onTextChange} />
-        </div>
-        {questions.length > 0 ? (
-          questions.map((question, index) => {
+
+    <input placeholder="Enter Question..." onChange={onTextChange} />
+  </div>
+  {
+    questions.length > 0 ? (
+      questions.map((question, index) => {
+        return (
+          <div className="homequery shadow-sm" key={index}>
+            <h5>Question {index + 1}</h5>
+            <div dangerouslySetInnerHTML={{ __html: question.query }} />
+            <div className="tags my-2">
+              {question.tags.map((tag, index) => {
+                return (
+                  <Link
+                    key={index}
+                    to={`/questions/tagged/${tag}`}
+                    className="tag"
+                    state={{ tag: tag }}
+                  >
+                    {tag}
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="footer">
+              Asked by{" "}
+              <Link
+                className="link"
+                to={question.user ? `/user/${question.userID}/${question.user.toLowerCase().replace(/\s+/g, "-")}` : ''}
+                state={{ userID: question.userID }}
+              >
+                {question.user}
+                {/* Link content */}
+              </Link>
+              {" "}
+              {moment(question.createdAt).fromNow()} in{" "}
+              <Link
+                to={`/questions/${question.categoryName
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
+                className="link"
+                state={{ categoryID: question.categoryID }}
+              >
+                {question.categoryName}
+              </Link>{" "}
+              <span className="views">
+                Viewed: {question.views ? question.views : 0} times
+              </span>
+            </div>
+            {ucategory !== 'junior' && (
+                  loggedIn === "true" ? (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => giveAnswer(question.query, question._id)}
+                    >
+                      Give Answer
+                    </div>
+                  ) : (
+                    <div
+                      className="btn btn-primary btn-sm mt-2 me-2"
+                      onClick={() => navigate("/login")}
+                    >
+                      Give Answer
+                    </div>
+                  ))
+          }
+            <div
+              className="btn btn-primary btn-sm mt-2"
+              onClick={() =>
+                showAnswers(question._id, question.query, question.tags)
+              }
+            >
+              Show Answers
+            </div>
+          </div>
+        );
+      })
+    ) : (
+    <div className="notFound">No Question Found</div>
+  )
+  }
+      </div >
+    <div className={`answerText ${showAnswer === true ? "active" : ""}`}>
+      <div className="closeBtn" onClick={() => hideAnswers()}>
+        <Close />
+      </div>
+      <div className="container py-2">
+        <h4 dangerouslySetInnerHTML={{ __html: query }} />
+        <div className="tags mt-2">
+          {tags.map((tag, index) => {
             return (
-              <div className="homequery shadow-sm" key={index}>
-                <h5>Question {index + 1}</h5>
-                <div dangerouslySetInnerHTML={{ __html: question.query }} />
-                <div className="tags my-2">
-                  {question.tags.map((tag, index) => {
-                    return (
-                      <Link
-                        key={index}
-                        to={`/questions/tagged/${tag}`}
-                        className="tag"
-                        state={{ tag: tag }}
-                      >
-                        {tag}
-                      </Link>
-                    );
-                  })}
-                </div>
-                <div className="footer">
-                  Asked by{" "}
-                  <Link
-  className="link"
-  to={question.user ? `/user/${question.userID}/${question.user.toLowerCase().replace(/\s+/g, "-")}` : ''}
-  state={{ userID: question.userID }}
-                >
-{question.user}
-  {/* Link content */}
-</Link>
-                  {" "}
-                  {moment(question.createdAt).fromNow()} in{" "}
-                  <Link
-                    to={`/questions/${question.categoryName
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                    className="link"
-                    state={{ categoryID: question.categoryID }}
-                  >
-                    {question.categoryName}
-                  </Link>{" "}
-                  <span className="views">
-                    Viewed: {question.views ? question.views : 0} times
-                  </span>
-                </div>
-                {loggedIn === "true" ? (
-                  <div
-                    className="btn btn-primary btn-sm mt-2 me-2"
-                    onClick={() => giveAnswer(question._id)}
-                  >
-                    Give Answer
-                  </div>
-                ) : (
-                  <div
-                    className="btn btn-primary btn-sm mt-2 me-2"
-                    onClick={() => navigate("/login")}
-                  >
-                    Give Answer
-                  </div>
-                )}
+              <Link
+                key={index}
+                to={`/questions/tagged/${tag}`}
+                className="tag"
+                state={{ tag: tag }}
+              >
+                {tag}
+              </Link>
+            );
+          })}
+        </div>
+        <hr />
+        {answers.length > 0 ? (
+          answers.map((answer, index) => {
+            return (
+              <div key={index} className="mb-3">
+                <h6>Answer: {index + 1}</h6>
                 <div
-                  className="btn btn-primary btn-sm mt-2"
-                  onClick={() =>
-                    showAnswers(question._id, question.query, question.tags)
-                  }
-                >
-                  Show Answers
+                  className="answer"
+                  dangerouslySetInnerHTML={{ __html: answer.answer }}
+                />
+                <div className="ansNo">
+                  <strong>
+                    Answered by{" "}
+                    <Link
+                      className="link"
+                      to={`/publicprofile/${answer.userID}/${answer.user
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      state={{ userID: answer.userID }}
+                    >
+                      {answer.user}
+                    </Link>{" "}
+                    {moment(answer.createdAt).format("DD MMM, YYYY")} at{" "}
+                    {moment(answer.createdAt).format("hh:mm A")}
+                  </strong>
                 </div>
+                <LikesDislikes
+                  props={{ userID: userID, answerID: answer._id }}
+                />
+                <hr />
               </div>
             );
           })
         ) : (
-          <div className="notFound">No Question Found</div>
+          <div
+            className={`notFound  ${darkMode === "light" ? "light" : "dark"}`}
+          >
+            No Answer Found!
+          </div>
         )}
       </div>
-      <div className={`answerText ${showAnswer === true ? "active" : ""}`}>
-        <div className="closeBtn" onClick={() => hideAnswers()}>
-          <Close />
-        </div>
-        <div className="container py-2">
-          <h4 dangerouslySetInnerHTML={{ __html: query }} />
-          <div className="tags mt-2">
-            {tags.map((tag, index) => {
-              return (
-                <Link
-                  key={index}
-                  to={`/questions/tagged/${tag}`}
-                  className="tag"
-                  state={{ tag: tag }}
-                >
-                  {tag}
-                </Link>
-              );
-            })}
-          </div>
-          <hr />
-          {answers.length > 0 ? (
-            answers.map((answer, index) => {
-              return (
-                <div key={index} className="mb-3">
-                  <h6>Answer: {index + 1}</h6>
-                  <div
-                    className="answer"
-                    dangerouslySetInnerHTML={{ __html: answer.answer }}
-                  />
-                  <div className="ansNo">
-                    <strong>
-                      Answered by{" "}
-                      <Link
-                        className="link"
-                        to={`/publicprofile/${answer.userID}/${answer.user
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                        state={{ userID: answer.userID }}
-                      >
-                        {answer.user}
-                      </Link>{" "}
-                      {moment(answer.createdAt).format("DD MMM, YYYY")} at{" "}
-                      {moment(answer.createdAt).format("hh:mm A")}
-                    </strong>
-                  </div>
-                  <LikesDislikes
-                    props={{ userID: userID, answerID: answer._id }}
-                  />
-                  <hr />
-                </div>
-              );
-            })
-          ) : (
-            <div
-              className={`notFound  ${darkMode === "light" ? "light" : "dark"}`}
-            >
-              No Answer Found!
-            </div>
-          )}
-        </div>
-      </div>
-      {/*Give answer */}
+    </div>
+  {/*Give answer */ }
       <div className={`answerBox ${showForm === true ? "active" : ""}`}>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="closeBtn" onClick={() => hideForm()}>
@@ -438,7 +446,7 @@ function AuthorQues() {
           );
         })}
       </div>
-    </div>
+    </div >
   );
 }
 

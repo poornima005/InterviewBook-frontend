@@ -74,7 +74,7 @@ function Login() {
       />
       <div className="authForm px-5 shadow">
         <h2 className="mb-5">Login</h2>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" >
           <Form.Label>Email ID</Form.Label>
           <Form.Control
             type="email"
@@ -85,7 +85,7 @@ function Login() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -106,7 +106,7 @@ function Login() {
             Login
           </Button>
         </div>
-        <div className="mt-3">Not Registered</div>
+        <div className="mt-3">Not Registered?</div>
         <div className="mt-3">
           <Link to="/register" className="btn btn-outline-primary">
             Register

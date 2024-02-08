@@ -33,25 +33,25 @@ function Sidebar() {
                     Questions
                 </div>
                 <div className="dropdown-menu show">
-                  <NavLink className="dropdown-item" activeclassname="active" to="/allquestions">Questions</NavLink>
-                  <NavLink className="dropdown-item" activeclassname="active" to="/addquestion">Add New Question</NavLink>
+                  <NavLink className="dropdown-item" activeclassname="active" to="/allquestions">My Questions</NavLink>
+                  <NavLink className="dropdown-item" activeclassname="active" to="/addquestion">Ask Question</NavLink>
                 </div>
               </li>
+              {ucategory !== 'junior' && (
+               
               <li className="nav-item dropdown">
                 <div className="nav-link dropdown-toggle">
                     <MdSubject/>
                     Experience
                 </div>
                 <div className="dropdown-menu show">
-                <NavLink className="dropdown-item" activeclassname="active" to="/allexperiences">Experience</NavLink>
-                
-                {ucategory !== 'junior' && (
                 <NavLink className="dropdown-item" activeClassName="active" to="/addexperience">
-               Add New Experience
+               Add Experience
                 </NavLink>
-    )}
+    
               </div>
               </li>
+              )}
               <li className="nav-item">
                 <NavLink className="nav-link" activeclassname="active" to={`/editprofile/${userID}`}>
                     <MdPeople/>
